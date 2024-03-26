@@ -33,17 +33,16 @@ export default class LambdaAPIStack extends cdk.Stack {
       },
     });
 
-    // AUTHORIZER
-    // const auth = new cdk.aws_apigateway.CognitoUserPoolsAuthorizer(
-    //   this,
-    //   "CognitoAuthorizor",
-    //   {
-    //     cognitoUserPools: [props.userPool],
-    //   }
-    // );
+    const auth = new cdk.aws_apigateway.CognitoUserPoolsAuthorizer(
+      this,
+      "CognitoAuthorizor",
+      {
+        cognitoUserPools: [props.userPool],
+      }
+    );
 
     const userResource = api.root.addResource("user", {
-      //defaultMethodOptions: { authorizer: auth },
+      defaultMethodOptions: { authorizer: auth },
     });
     const forumResource = api.root.addResource("forum", {});
 
@@ -59,6 +58,18 @@ export default class LambdaAPIStack extends cdk.Stack {
         dbTables: [props.postTable],
         timeout: 3,
     })
+
+    new apiEndpoint(this, "UserPostTableData", {
+      apiRoot: userResource,
+      endpointPath: 'post-forum-data',
+      httpMethod: "POST",
+      lambdaPath: "./lambdas/user/post-data",
+      environment: {
+          USER_DATA_TABLE_NAME: props.postTable.tableName,
+      },
+      dbTables: [props.postTable],
+      timeout: 3,
+  })
 
   }
 }

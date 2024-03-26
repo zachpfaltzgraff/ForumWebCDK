@@ -10,7 +10,7 @@ export class DynamoDBStack extends cdk.Stack {
   
     this.postTable = new dynamodb.Table(this, 'postTable', {
         partitionKey: {name: 'UUID', type: dynamodb.AttributeType.STRING },
-        sortKey: {name: 'date-created', type: dynamodb.AttributeType.STRING },
+        sortKey: {name: 'dateCreated', type: dynamodb.AttributeType.STRING },
         billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
         encryption: dynamodb.TableEncryption.AWS_MANAGED,
         removalPolicy: cdk.RemovalPolicy.DESTROY

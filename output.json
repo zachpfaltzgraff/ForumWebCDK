@@ -1,14 +1,15 @@
 {
   "CognitoStack": {
-    "PoolId": "us-east-1_0edT5noDO",
-    "ClientId": "113h9v5pandgnnoibkco92gfk9",
-    "Region": "us-east-1"
+    "PoolId": "us-east-1_f9AD0TY4V",
+    "ClientId": "3i7cacullsr6ti66f11nas3afd",
+    "Region": "us-east-1",
+    "ExportsOutputFnGetAttPflitzerUserPool9F429A74ArnAF8C5D6C": "arn:aws:cognito-idp:us-east-1:851725577455:userpool/us-east-1_f9AD0TY4V"
   },
   "DynamoDBStack": {
-    "ExportsOutputRefpostTable6DB6301F3EA40C0C": "DynamoDBStack-postTable6DB6301F-TU6TQFEQ3MWG",
-    "ExportsOutputFnGetAttpostTable6DB6301FArn38F42EDC": "arn:aws:dynamodb:us-east-1:851725577455:table/DynamoDBStack-postTable6DB6301F-TU6TQFEQ3MWG"
+    "ExportsOutputRefpostTable6DB6301F3EA40C0C": "DynamoDBStack-postTable6DB6301F-C9FQ9Y7IA1RS",
+    "ExportsOutputFnGetAttpostTable6DB6301FArn38F42EDC": "arn:aws:dynamodb:us-east-1:851725577455:table/DynamoDBStack-postTable6DB6301F-C9FQ9Y7IA1RS"
   },
   "LambdaAPIStack": {
-    "APIEndpoint1793E782": "https://4fhtm8upz0.execute-api.us-east-1.amazonaws.com/prod/"
+    "APIEndpoint1793E782": "https://pa4gmx0bm3.execute-api.us-east-1.amazonaws.com/prod/"
   }
 }
