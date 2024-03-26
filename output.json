@@ -7,5 +7,8 @@
   "DynamoDBStack": {
     "ExportsOutputRefpostTable6DB6301F3EA40C0C": "DynamoDBStack-postTable6DB6301F-TU6TQFEQ3MWG",
     "ExportsOutputFnGetAttpostTable6DB6301FArn38F42EDC": "arn:aws:dynamodb:us-east-1:851725577455:table/DynamoDBStack-postTable6DB6301F-TU6TQFEQ3MWG"
+  },
+  "LambdaAPIStack": {
+    "APIEndpoint1793E782": "https://4fhtm8upz0.execute-api.us-east-1.amazonaws.com/prod/"
   }
 }
