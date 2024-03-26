@@ -1,0 +1,11 @@
+{
+  "CognitoStack": {
+    "PoolId": "us-east-1_0edT5noDO",
+    "ClientId": "113h9v5pandgnnoibkco92gfk9",
+    "Region": "us-east-1"
+  },
+  "DynamoDBStack": {
+    "ExportsOutputRefpostTable6DB6301F3EA40C0C": "DynamoDBStack-postTable6DB6301F-TU6TQFEQ3MWG",
+    "ExportsOutputFnGetAttpostTable6DB6301FArn38F42EDC": "arn:aws:dynamodb:us-east-1:851725577455:table/DynamoDBStack-postTable6DB6301F-TU6TQFEQ3MWG"
+  }
+}
