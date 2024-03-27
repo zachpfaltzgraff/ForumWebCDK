@@ -26,7 +26,7 @@ import {
             username: requestBody.username,
             title: requestBody.title,
             body: requestBody.body,
-            comments: requestBody.comments,
+            commentArray: requestBody.commentArray,
             likeArray: requestBody.likeArray,
             saveArray: requestBody.saveArray,
             likeCount: requestBody.likeCount,
