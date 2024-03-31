@@ -70,5 +70,17 @@ export default class LambdaAPIStack extends cdk.Stack {
       timeout: 3,
     })
 
+    new apiEndpoint(this, "UserPutLikeData", {
+      apiRoot: forumResource,
+      endpointPath: 'like-update',
+      httpMethod: "PUT",
+      lambdaPath: "./lambdas/forum/put-data/like",
+      environment: {
+        USER_DATA_TABLE_NAME: props.postTable.tableName,
+      },
+      dbTables: [props.postTable],
+      timeout: 3,
+    })
+
   }
 }
