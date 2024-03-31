@@ -62,13 +62,13 @@ export default class LambdaAPIStack extends cdk.Stack {
       apiRoot: forumResource,
       endpointPath: 'post-forum-data',
       httpMethod: "POST",
-      lambdaPath: "./lambdas/user/post-data",
+      lambdaPath: "./lambdas/forum/post-data",
       environment: {
           USER_DATA_TABLE_NAME: props.postTable.tableName,
       },
       dbTables: [props.postTable],
       timeout: 3,
-  })
+    })
 
   }
 }
