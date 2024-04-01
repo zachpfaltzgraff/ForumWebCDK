@@ -56,7 +56,7 @@ export default class LambdaAPIStack extends cdk.Stack {
         },
         dbTables: [props.postTable],
         timeout: 3,
-    })
+    });
 
     new apiEndpoint(this, "UserPostTableData", {
       apiRoot: forumResource,
@@ -68,7 +68,7 @@ export default class LambdaAPIStack extends cdk.Stack {
       },
       dbTables: [props.postTable],
       timeout: 3,
-    })
+    });
 
     new apiEndpoint(this, "UserPutLikeData", {
       apiRoot: forumResource,
@@ -80,7 +80,18 @@ export default class LambdaAPIStack extends cdk.Stack {
       },
       dbTables: [props.postTable],
       timeout: 3,
-    })
+    });
 
+    new apiEndpoint(this, "UserPutSaveData", {
+      apiRoot: forumResource,
+      endpointPath: 'save-update',
+      httpMethod: "PUT",
+      lambdaPath: "./lambdas/forum/put-data/save",
+      environment: {
+        USER_DATA_TABLE_NAME: props.postTable.tableName,
+      },
+      dbTables: [props.postTable],
+      timeout: 3,
+    });
   }
 }
