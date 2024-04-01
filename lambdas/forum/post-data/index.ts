@@ -15,14 +15,13 @@ import {
     const requestBody = JSON.parse(event.body ?? '');
 
     let uuid = crypto.randomUUID();
-    const today: Date = new Date();
     const params = {
         TableName: process.env.USER_DATA_TABLE_NAME
         ? process.env.USER_DATA_TABLE_NAME
         : '',
         Item: {
             UUID: uuid,
-            dateCreated: today.toString(),
+            dateCreated: requestBody.dateCreated,
             username: requestBody.username,
             title: requestBody.title,
             body: requestBody.body,

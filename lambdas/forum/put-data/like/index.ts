@@ -26,18 +26,20 @@ export const handler = async (
         const accountID = requestBody.accountID;
 
         const params = {
-            tableName: process.env.USER_DATA_TABLE_NAME ?? '',
+            TableName: process.env.USER_DATA_TABLE_NAME ?? '',
             Key: {
                 UUID: requestBody.UUID,
+                dateCreated: requestBody.dateCreated,
             },
-            UpdateExpression: "SET likeCount = :likeCount, likeArray = list_append(likeArray, :accountID",
+            UpdateExpression: "SET likeCount = :likeCount, likeArray = list_append(likeArray, :accountID)",
             ExpressionAttributeValues: {
                 ":likeCount": likeCount,
                 ":accountID": [accountID],
             }
         }
 
-        console.log(params)
+        console.log(params);
+        await db.send(new UpdateCommand(params));
 
         return {
             statusCode: 200,
