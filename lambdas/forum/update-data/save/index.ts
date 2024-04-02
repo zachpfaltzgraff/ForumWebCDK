@@ -10,20 +10,22 @@ export const handler = async (
   context: APIGatewayEventRequestContext,
 ) => {
     try {
-        if (!event.body) {
+        if(!event.body) {
             return {
                 statusCode: 400,
-                body: JSON.stringify({error: "Request body is missing"}),
+                body: JSON.stringify({error: "request body is missing"}),
                 headers: {
                     "Access-Control-Allow-Origin": "*",
                 }
             }
         }
 
-        const requestBody = JSON.parse(event.body ?? '');
+        const requestBody: { [key: string]: any } = JSON.parse(event.body ?? '');
 
-        const likeCount = requestBody.likeCount;
-        const accountID = requestBody.accountID;
+        const index: number = requestBody.index;
+
+        const modifiedSaveArray = Array.isArray(requestBody.saveArray)
+        ? requestBody.saveArray.filter((_element: any, idx: number) => idx !== index) : [];
 
         const params = {
             TableName: process.env.USER_DATA_TABLE_NAME ?? '',
@@ -31,29 +33,28 @@ export const handler = async (
                 UUID: requestBody.UUID,
                 dateCreated: requestBody.dateCreated,
             },
-            UpdateExpression: "SET likeCount = :likeCount, likeArray = list_append(likeArray, :accountID)",
+            UpdateExpression: "SET saveArray = :newSaveArray",
             ExpressionAttributeValues: {
-                ":likeCount": likeCount,
-                ":accountID": [accountID],
+                ":newSaveArray": modifiedSaveArray,
             }
         }
 
-        console.log(params);
+        console.log(params)
         await db.send(new UpdateCommand(params));
 
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: "Successful update of like"}),
+            body: JSON.stringify({message: "succesfully removed save"}),
             headers: {
                 "Access-Control-Allow-Origin": "*",
-            },
-        };
-    } catch (error) {
-        console.log("Error:", error);
+            }
+        }
+    } catch(error) {
+        console.log("Error: ", error);
 
         return {
             statusCode: 500,
-            body: JSON.stringify({ error: "Internal server error."}),
+            body: JSON.stringify({error: "Internal server error."}),
             headers: {
                 "Access-Control-Allow-Origin": "*",
             },
