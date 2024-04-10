@@ -118,5 +118,17 @@ export default class LambdaAPIStack extends cdk.Stack {
       timeout: 3,
     });
 
+    new apiEndpoint(this, "UserPutCommentData", {
+      apiRoot: forumResource,
+      endpointPath: 'comment-put',
+      httpMethod: "PUT",
+      lambdaPath: "./lambdas/forum/put-data/comment",
+      environment: {
+        USER_DATA_TABLE_NAME: props.postTable.tableName,
+      },
+      dbTables: [props.postTable],
+      timeout: 3,
+    });
+
   }
 }
