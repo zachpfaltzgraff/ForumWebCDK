@@ -2,7 +2,7 @@ import {
     APIGatewayEventRequestContext,
     APIGatewayProxyEvent,
   } from "aws-lambda";
-  import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
+  import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
   import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
   
   const client = new DynamoDBClient({});
@@ -14,23 +14,39 @@ import {
   ) => {
     const requestBody = JSON.parse(event.body ?? '');
 
-    const params = {
-        TableName: process.env.USER_DATA_TABLE_NAME
-        ? process.env.USER_DATA_TABLE_NAME
-        : '',
-        Key: {
-            UUID: requestBody.uuid,
-            dateCreated: requestBody.dateCreated
-        },
-        Item: {
-            commentArray: {
-                username: requestBody.username,
-                comment: requestBody.comment,
+    let existingComments = [];
+    if (requestBody.uuid && requestBody.dateCreated) {
+        const getParams = {
+            TableName: process.env.USER_DATA_TABLE_NAME || '',
+            Key: {
+                UUID: requestBody.uuid,
+                dateCreated: requestBody.dateCreated
             }
-        }
+        };
+        const getCommand = new GetCommand(getParams);
+        const existingData = await db.send(getCommand);
+        existingComments = existingData.Item?.commentArray || [];
     }
 
-    let command = new PutCommand(params);
+    existingComments.push({
+        username: requestBody.username,
+        comment: requestBody.comment
+    });
+
+    const params = {
+        TableName: process.env.USER_DATA_TABLE_NAME ?? '',
+        Key: {
+            UUID: requestBody.uuid,
+            dateCreated: requestBody.dateCreated,
+        },
+        UpdateExpression: "SET commentArray = :newCommentArray",
+        ExpressionAttributeValues: {
+            ":newCommentArray": existingComments,
+        }
+    };
+    console.log(params);
+
+    let command = new UpdateCommand(params);
     let userData = await db.send(command);
     console.log(JSON.stringify(userData));
 
