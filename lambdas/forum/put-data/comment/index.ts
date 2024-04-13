@@ -2,7 +2,7 @@ import {
     APIGatewayEventRequestContext,
     APIGatewayProxyEvent,
   } from "aws-lambda";
-  import { DynamoDBDocumentClient, GetCommand, PutCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+  import { DynamoDBDocumentClient, GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
   import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
   
   const client = new DynamoDBClient({});
